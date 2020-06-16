@@ -27,8 +27,8 @@ describe('<Calculator />', () => {
         const { getByRole } = render(<Calculator />)
         expect(getByRole('button', { name: /\+/i })).toBeInTheDocument()
         expect(getByRole('button', { name: /\-/i })).toBeInTheDocument()
-        expect(getByRole('button', { name: /\*/i })).toBeInTheDocument()
-        expect(getByRole('button', { name: /\//i })).toBeInTheDocument()
+        expect(getByRole('button', { name: /x/i })).toBeInTheDocument()
+        expect(getByRole('button', { name: /÷/i })).toBeInTheDocument()
     })
 
     it('renders a decimal button', () => {
@@ -88,7 +88,7 @@ describe('<Calculator />', () => {
         fireEvent.click(getByRole('button', { name: /7/i }))
         expect(getByTestId('display').textContent).toBe("7")
 
-        fireEvent.click(getByRole('button', { name: /\*/i }))
+        fireEvent.click(getByRole('button', { name: /x/i }))
 
         fireEvent.click(getByRole('button', { name: /5/i }))
         expect(getByTestId('display').textContent).toBe("5")
@@ -105,7 +105,7 @@ describe('<Calculator />', () => {
         fireEvent.click(getByRole('button', { name: /8/i }))
         expect(getByTestId('display').textContent).toBe("8")
 
-        fireEvent.click(getByRole('button', { name: /\//i }))
+        fireEvent.click(getByRole('button', { name: /÷/i }))
 
         fireEvent.click(getByRole('button', { name: /2/i }))
         expect(getByTestId('display').textContent).toBe("2")
@@ -124,7 +124,7 @@ describe('<Calculator />', () => {
         fireEvent.click(getByRole('button', { name: /0/i }))
         expect(getByTestId('display').textContent).toBe("50")
 
-        fireEvent.click(getByRole('button', { name: /\//i }))
+        fireEvent.click(getByRole('button', { name: /÷/i }))
 
         fireEvent.click(getByRole('button', { name: /2/i }))
         expect(getByTestId('display').textContent).toBe("2")
@@ -141,7 +141,7 @@ describe('<Calculator />', () => {
         fireEvent.click(getByRole('button', { name: /8/i }))
         expect(getByTestId('display').textContent).toBe("8")
 
-        fireEvent.click(getByRole('button', { name: /\//i }))
+        fireEvent.click(getByRole('button', { name: /÷/i }))
 
         fireEvent.click(getByRole('button', { name: /2/i }))
         expect(getByTestId('display').textContent).toBe("2")
@@ -150,4 +150,20 @@ describe('<Calculator />', () => {
         expect(getByTestId('display').textContent).toBe("0")
     })
 
+    it('should place a decimal after pressing its button', () => {
+        const { getByRole, getByTestId } = render(<Calculator />)
+
+        expect(getByTestId('display').textContent).toBe("0")
+
+        fireEvent.click(getByRole('button', { name: /\./i }))
+
+        fireEvent.click(getByRole('button', { name: /8/i }))
+        expect(getByTestId('display').textContent).toBe("0.8")
+
+        fireEvent.click(getByRole('button', { name: /5/i }))
+        expect(getByTestId('display').textContent).toBe("0.85")
+
+        fireEvent.click(getByRole('button', { name: /\./i }))
+        expect(getByTestId('display').textContent).toBe("0.85")
+    })
 })
